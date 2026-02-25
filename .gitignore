@@ -5,8 +5,5 @@
 slprj/
 *.slxc
 
-# PDF documents
-*.pdf
-
 # MATLAB autosave
 *.asv
