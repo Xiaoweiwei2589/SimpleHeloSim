@@ -47,7 +47,7 @@ while ((it<itmax)&&(err>trim_tol))
  
  targvec_full=[xdot0;y0];
  targvec=targvec_full(TRIMTARG);
- targ_err=targvec-targ_des(TRIMTARG);
+ targ_err=targvec-targ_des(TRIMTARG); % Here TRIMTARG is 12, so we only trim 12 xdots , we dont trim y_e for now.
  scalevec_full=[XSCALE;YSCALE];
  err=max(abs(targ_err)./scalevec_full(TRIMTARG));
  disp([num2str(it), '            ' ,num2str(err)]);
@@ -70,7 +70,7 @@ if (err>trim_tol)
     disp('Warning: Trim not acheived');
     itrim=0;
 else
-    disp(['Successful trim']);
+    disp('Successful trim');
     itrim=1;
     
 end

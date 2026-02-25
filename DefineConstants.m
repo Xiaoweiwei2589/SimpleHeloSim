@@ -1,7 +1,4 @@
-%Sample script that just initializes and trims SimpleHelo simulation model
-
-%Edit this file to change properties of the aircraft, or run different types of trims
-
+function[constants]=DefineConstants
 %Set aircraft properties and constants
 % Similar to a Bell 206L
 
@@ -55,8 +52,7 @@ constants.KLAMBDAF=[1. 1. 0. 0.];
 
 %Horizontal Stabilizer
 %Area (ft^2)
-constants.SHT=11.;
-%constants.SHT=0;
+constants.SHT=11.;  
 %Lift Slope (1/rad)
 constants.AHT=2.3;
 %Location (ft)
@@ -96,49 +92,11 @@ constants.XSCALE=[ [0.1 0.1 0.1 ],pi/180*0.1*ones(1,6), [0.1 0.1 0.1]]'; %Scales
 constants.YSCALE=[0.1 0.1 0.1 0.1]'; %Scales outputs when computing target error
 constants.DELULIN=[0.1 0.1 0.1 0.1]; %Control perturbations when linearizing
 constants.DELXLIN=constants.XSCALE*0.1; %State derivatives when linearizing
-constants.TRIMTARG=[1:12];         %Trim traget indices (Trim out state derivatives only in this case)
+constants.TRIMTARG=[1:12];         %Trim target indices (Trim out state derivatives only in this case)
 constants.TRIMVARS=[1:8,13:16];    %Trim variable indicies.  Trim vleocity, rates, roll/pitch attitude, and 4 controls.
 constants.TRIMTOL=5.e-4; %Will trim until all components of scaled error vector are < TRIMTOL
 %Index of rotor azimuth state (no need in Simple Helo)
 constants.IDXAZ=[];
 %Numbder of azimuth locations to average over during trim.  No azimuth averaging needed in Simple Helo
 constants.NAZTRIM=1;
-
-% Above is just setting Constants.
-
-
-%Initial Trim Solution - this sets forward speed, no climb, side velocity
-%or turn rate
-VXTRIM=input('Enter trimmed forward speed in ft/sec:');
-%Cannot trim at exactly 0 airspeed
-if (abs(VXTRIM)<0.01)
-    VXTRIM=0.01;
-end
-VYTRIM=0.;
-VZTRIM=0.;
-PSIDTRIM=0.;  % PsiDotTrim = 0
-
-
-%Set up trim variables
-%Initial guess for state in trim solution
-x0=zeros(constants.NSTATES,1);
-x0(1)=VXTRIM;
-x0(2)=VYTRIM;
-x0(3)=VZTRIM;
-
-%Initial guess for controls
-u0=[0;0;20.;25.]; % Reset initial guess for controls, make it the same for each trim
-
-%Trim Target values 
-targ_des=zeros(constants.NSTATES+constants.NOUT,1);  % [xdot_e, y_e]
-targ_des(10)=VXTRIM;
-targ_des(11)=VYTRIM;
-targ_des(12)=VZTRIM;
-targ_des(9)=PSIDTRIM;
-
-
-[x0,u0]=trimmer('SimpleHelo',x0,u0,targ_des,constants);
-[x_dot,y]=SimpleHelo(x0,u0,[],constants);
-[F,G,M,A,B,C,D]=linearize('SimpleHelo',x0,u0,x_dot,constants);
-
-
+return

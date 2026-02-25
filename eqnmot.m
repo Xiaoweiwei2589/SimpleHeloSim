@@ -7,6 +7,9 @@ function[xdot]=eqnmot(x,FM,constants);
 %Outputs: Fuselage State Vector Derivative, xdot
 %This module simulates the standard aircraft, rigid body equations of motion
 
+% The important thing in practice, I believe,  is not to code EOM, in terms of this ,AI can
+% do a better job than me. Able to derive the correct EOM. 
+
 
 u=x(1);
 v=x(2);

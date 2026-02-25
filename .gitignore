@@ -1,0 +1,12 @@
+# Visual Studio
+.vs/
+
+# Simulink build artifacts
+slprj/
+*.slxc
+
+# PDF documents
+*.pdf
+
+# MATLAB autosave
+*.asv

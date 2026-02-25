@@ -9,7 +9,7 @@ NSTATES=constants.NSTATES;
 NCTRLS=constants.NCTRLS;
 NOUT=constants.NOUT;
 
-[xdot0,y0]=feval(acfunction,x0,u0,xdot_in,constants);
+%[xdot0,y0]=feval(acfunction,x0,u0,xdot_in,constants);
 F=zeros(NSTATES);
 G=zeros(NSTATES,NCTRLS);
 M=eye(NSTATES);
@@ -20,7 +20,7 @@ for k=1:NSTATES
     x_p=x0;
     x_p(k)=x_p(k)+DELXLIN(k);
     [xdot_p1,y_p1]=feval(acfunction,x_p,u0,xdot_in,constants);
-    x_p(k)=x_p(k)-2*DELXLIN(k);
+    x_p(k)=x_p(k)-2*DELXLIN(k); % Why subtract 2*DELXLIN instead of just DELXLIN?
     [xdot_p2,y_p2]=feval(acfunction,x_p,u0,xdot_in,constants);
     F(:,k)=(xdot_p1-xdot_p2)/(2*DELXLIN(k));
     C(:,k)=(y_p1-y_p2)/(2*DELXLIN(k));
